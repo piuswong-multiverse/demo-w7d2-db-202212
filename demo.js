@@ -10,12 +10,24 @@ app.get('/', (req, res) => {
 })
 
 // Get all books from Books DB with endpoint "/books"
-
-
+app.get('/books', async (req, res) => {
+    // get all books...
+    let books = await Books.findAll();
+    // send them out as a response...
+    res.json(books);
+})
 
 //Get specific book from Books DB based on number specified in URL Path
+app.get('/books/:id', async (req, res) => {
+    // get single book
+    let book = await Books.findByPk(req.params.id);
+    // send it out
+    res.send(book);
+})
 
-
+app.get('*', (req, res) => {
+    res.send("BLAHBLHABLHA");
+})
 
 app.listen(port, () => {
     sequelize.sync();
